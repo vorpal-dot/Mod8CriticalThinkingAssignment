@@ -1,0 +1,37 @@
+#install the dplyr package
+install.packages("dplyr")
+#install the ggplot2 package
+install.packages("ggplot2")
+library(dplyr)
+library(ggplot2)
+#install the tidyverse package
+install.packages("tidyverse")
+library(tidyverse)
+#attach the main data set
+attach(video_game_dataset)
+#summaries the whole data set
+summary(video_game_dataset)
+#View the structure of the data
+head(video_game_dataset)
+str(video_game_dataset)
+#Box plot Creatation original data.
+boxplot(Critic_Score, User_Score, data = video_game_dataset, main="Initial Critic and User Scores")
+#summarizes the the variables of interest.
+summary(video_game_dataset$Critic_Score)
+summary(video_game_dataset$User_Score)
+#Create subset of those variables, so that NA's can be removed. 
+score_subset<-video_game_dataset[c("Critic_Score", "User_Score")]
+score_omit<-score_subset[complete.cases("Critic_Score", "User_Score")]
+rm(Score_omit)
+score_omit<-complete.cases(score_omit)
+install.packages("psych")
+library(psych)
+#Remove rows containing NA's with Complete.cases
+score_complete<- score_subset[complete.cases(score_subset), ]
+# Re-summarize the new Data Frame
+summary(score_complete)
+#box plot new data frame
+boxplot(score_complete, main = "NA Omited Scores for Critics and Users")
+#T test numeric value indepentent 
+t.test(score_complete$Critic_Score, score_complete$User_Score)
+t.test(score_subset$Critic_Score, score_subset$User_Score)
