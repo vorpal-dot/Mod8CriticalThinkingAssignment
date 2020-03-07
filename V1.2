@@ -31,7 +31,8 @@ score_complete<- score_subset[complete.cases(score_subset), ]
 # Re-summarize the new Data Frame
 summary(score_complete)
 #box plot new data frame
-boxplot(score_complete, main = "NA Omited Scores for Critics and Users")
+boxplot(score_complete, main = "NA Omitted Scores for Critics and Users")
 #T test numeric value indepentent 
 t.test(score_complete$Critic_Score, score_complete$User_Score)
 t.test(score_subset$Critic_Score, score_subset$User_Score)
+t.test(score_complete$Critic_Score, score_complete$User_Score, alternative = "two.sided", var.equal = FALSE)

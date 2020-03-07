@@ -1,0 +1,43 @@
+#install the dplyr package
+install.packages("dplyr")
+#install the ggplot2 package
+install.packages("ggplot2")
+library(dplyr)
+library(ggplot2)
+#install the tidyverse package
+install.packages("tidyverse")
+library(tidyverse)
+#attach the main data set
+attach(video_game_dataset)
+#summaries the whole data set
+summary(video_game_dataset)
+#View the structure of the data
+head(video_game_dataset)
+str(video_game_dataset)
+#Box plot Creatation original data.
+boxplot(Critic_Score, User_Score, data = video_game_dataset, main="Initial Critic and User Scores")
+boxplot(score_complete, main = "NA Omitted Scores for Critics and Users")
+plot(score_complete, col(User_Score, as.factor = red) main = "NA Omitted Scores for Critics and Users")
+plot(score_complete$Critic_Score,score_complete$User_Score, main = "NA Omitted Scores for Critics and Users")
+plot(video_game_dataset&Global_Sales,video_game_dataset$Critic_Score)
+plot(video_game_dataset$Global_Sales~video_game_dataset$Genre, main = "Global Sales by Genre")
+plot(score_complete$Critic_Score,score_complete$User_Score, main = "NA Omitted Scores for Critics and Users")
+lm_score<-lm(score_complete$Critic_Score~score_complete$User_Score)
+summary(lm_score)
+plot(score_complete$Critic_Score,score_complete$User_Score, main = "NA Omitted Scores for Critics and Users")
+abline(lm_score, col=2, lwd=4)
+sales_omit<-video_game_dataset[complete.cases("Global_Sales")]
+sales_omit<- sales_omit[complete.cases(sales_omit$Global_Sales), ]
+plot(sales_omit$Global_Sales,score_complete$Critic_Score)
+plot(score_complete$Critic_Score,sales_omit$Global_Sales)
+sales_omit<- sales_omit[complete.cases(sales_omit$Critic_Score), ]
+mod<-lm(sales_omit$Global_Sales~sales_omit$Critic_Score)
+plot(sales_omit$Global_Sales~sales_omit$Critic_Score, main = "Critic's Influence on Sales")
+abline(mod, col=2, lwd=4)
+summary(mod)
+sales_omit<- sales_omit[complete.cases(sales_omit$User_Score), ]
+plot(sales_omit$Global_Sales~sales_omit$User_Score, main = "User's Influence on Sales")
+mod_user<-lm(sales_omit$Global_Sales~sales_omit$User_Score)
+abline(mod_user, col=4, lwd=3)
+summary(mod_user)
+View(sales_omit$Global_Sales == 9)
